@@ -2,6 +2,7 @@
   "name": "stocksearch",
   "version": "0.0.0",
   "scripts": {
+    "test-headless": "ng test --watch=false --browsers=ChromeHeadless",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",

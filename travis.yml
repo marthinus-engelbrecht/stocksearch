@@ -1,0 +1,22 @@
+language: node_js
+node_js:
+  - "9"
+dist: trusty
+sudo: required
+branches:
+  only:
+    - master
+before_script:
+  - npm install -g @angular/cli
+script:
+  - ng lint
+  - npm run test-headless
+  - ng run e2e
+  - ng build --prod --base-href https://marthinus-engelbrecht.github.io/stocksearch
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist/travis-demo
+  on:
+    branch: master
