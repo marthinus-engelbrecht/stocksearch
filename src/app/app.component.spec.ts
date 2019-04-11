@@ -15,8 +15,6 @@ describe('Unit Under Test: AppComponent', () => {
   }));
 
   describe('Given the AppComponent has been created', () => {
-    it('should pass the first test',  () => {
-      return true;
-    });
+
   });
 });

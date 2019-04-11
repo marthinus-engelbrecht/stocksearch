@@ -9,6 +9,7 @@ branches:
 before_script:
   - npm install -g @angular/cli
 script:
+  - google-chrome --version
   - ng lint
   - npm run test-headless
   - npm run e2e
