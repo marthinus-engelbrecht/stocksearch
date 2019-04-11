@@ -20,3 +20,6 @@ deploy:
   local_dir: dist/stocksearch
   on:
     branch: master
+
+addons:
+  chrome: stable
