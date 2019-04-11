@@ -11,7 +11,7 @@ before_script:
 script:
   - ng lint
   - npm run test-headless
-  - ng e2e
+  - npm run e2e
   - ng build --prod --base-href https://marthinus-engelbrecht.github.io/stocksearch
 deploy:
   provider: pages
