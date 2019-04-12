@@ -1,0 +1,40 @@
+import {RatesResponse} from '../../app/model/rates-response';
+
+export const successFulLatestCurrencyRates: RatesResponse = {
+  base: 'EUR',
+  rates: {
+    BGN: 1.9558,
+    NZD: 1.6697,
+    ILS: 4.0351,
+    RUB: 72.86,
+    CAD: 1.5032,
+    USD: 1.1279,
+    PHP: 58.543,
+    CHF: 1.128,
+    ZAR: 15.7391,
+    AUD: 1.5785,
+    JPY: 125.38,
+    TRY: 6.4144,
+    HKD: 8.8405,
+    MYR: 4.6328,
+    THB: 35.839,
+    HRK: 7.4253,
+    NOK: 9.5895,
+    IDR: 15959.79,
+    DKK: 7.4652,
+    CZK: 25.608,
+    HUF: 321.84,
+    GBP: 0.86083,
+    MXN: 21.2783,
+    KRW: 1283.09,
+    ISK: 134.2,
+    SGD: 1.5258,
+    BRL: 4.3301,
+    PLN: 4.2833,
+    INR: 77.9945,
+    RON: 4.7605,
+    CNY: 7.5758,
+    SEK: 10.44
+  },
+  date: '2019-04-10'
+};

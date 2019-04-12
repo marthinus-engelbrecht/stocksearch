@@ -1,0 +1,8 @@
+<p>
+  <select #select>
+    <option *ngFor="let symbol of symbols" [value]="symbol">{{symbol}}</option>
+  </select>
+  <button (click)="search()">Search</button>
+  <br/>
+  <label>&euro; {{price}}</label>
+</p>
