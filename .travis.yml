@@ -13,7 +13,7 @@ script:
   - ng lint
   - npm run test-headless
   - npm run e2e
-  - ng build --prod --base-href https://marthinus-engelbrecht.github.io/stocksearch
+  - ng build --prod --base-href https://marthinus-engelbrecht.github.io/stocksearch --deploy-url https://marthinus-engelbrecht.github.io/stocksearch/
 deploy:
   provider: pages
   skip_cleanup: true
