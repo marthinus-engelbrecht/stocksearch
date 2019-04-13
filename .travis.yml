@@ -11,9 +11,10 @@ before_script:
 script:
   - google-chrome --version
   - ng lint
-  - npm run test-headless
+  - npm test
   - npm run e2e
   - ng build --prod --base-href https://marthinus-engelbrecht.github.io/stocksearch --deploy-url https://marthinus-engelbrecht.github.io/stocksearch/
+  - mv coverage/stocksearch dist/stocksearch/coverage
 deploy:
   provider: pages
   skip_cleanup: true

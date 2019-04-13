@@ -9,6 +9,7 @@ import {StocksEndpoints} from './stocks.endpoints';
 import {Observable} from 'rxjs';
 import {CurrencyService} from '../currency/currency.service';
 import {availableStockItems} from './available-stock-items.constant';
+import {forEach} from "@angular/router/src/utils/collection";
 
 describe('Unit Under Test: StockDataService', () => {
   const http = createSpyObj(HttpClient.name, ['get']);
@@ -22,47 +23,55 @@ describe('Unit Under Test: StockDataService', () => {
   }));
 
   describe('Given stock data exists for a set of stocks', () => {
-    describe('When getPrice is called with the stock symbol of one of those items', () => {
-      let response$: Observable<number>;
-      const poundEuroConversionRate = 0.86083;
-      const expectedUrl = StocksEndpoints.data;
-      const hcbalStockPriceInPenceSterling = 652.70;
-      const penceToPound = 100;
-      const expectedPrice = hcbalStockPriceInPenceSterling / penceToPound * poundEuroConversionRate;
+    availableStockItems.forEach((stockSymbol) => {
+      const stockItemData = successfulGetStockPricesResponse.data.find((item) => item.symbol === stockSymbol);
+      const expectedCurrencyArgument = stockItemData.currency === 'GBX' ? 'GBP' : stockItemData.currency;
 
-      beforeEach(() => {
-        initTestScheduler();
-        const stock$ = cold('a|', {a: successfulGetStockPricesResponse});
-        const currency$ = cold('a|', {a: poundEuroConversionRate});
+      describe(`When getPrice is called with the stock symbol ${expectedCurrencyArgument}`, () => {
+        let response$: Observable<number>;
+        const conversionRate = 0.86083;
+        const expectedUrl = StocksEndpoints.data;
+        const stockPriceInEuro = stockItemData.price;
+        const penceToPound = 100;
+        const convertedPrice = stockPriceInEuro * conversionRate;
+        const expectedPrice = stockItemData.currency === 'GBX' ? convertedPrice / penceToPound : convertedPrice;
 
-        http.get.and.returnValue(stock$);
-        currencyService.getLatestRate.and.returnValue(currency$);
+        beforeEach(() => {
+          initTestScheduler();
+          const stockPrice$ = cold('a|', {a: successfulGetStockPricesResponse});
+          const currencyRate$ = cold('a|', {a: conversionRate});
 
-        const service = TestBed.get(StocksService);
-        response$ = service.getPrice('HSBA.L');
-      });
+          http.get.and.returnValue(stockPrice$);
+          currencyService.getLatestRate.and.returnValue(currencyRate$);
 
-      it(`Then it should make a GET http call to ${StocksEndpoints.data} with the symbols as query parameters`, () => {
-        expect(http.get).toHaveBeenCalledWith(expectedUrl, {
-          params: {
-            symbol: availableStockItems.join(','),
-            api_token: 'demo'
-          }
+          const service = TestBed.get(StocksService);
+          response$ = service.getPrice(stockSymbol);
         });
-      });
 
-      it(`Then is should call currencyService.getLatestRate() with the GBP`, () => {
-        response$.subscribe((actualPrice) => {
-          expect(currencyService.getLatestRate).toHaveBeenCalledWith('GBP');
+        it(`Then it should make a GET http call to ${StocksEndpoints.data} with the symbols as query parameters`, () => {
+          expect(http.get).toHaveBeenCalledWith(expectedUrl, {
+            params: {
+              symbol: availableStockItems.join(','),
+              api_token: 'demo'
+            }
+          });
         });
-        getTestScheduler().flush();
-      });
 
-      it('Then it should return the stock price of that stock in Euro', () => {
-        response$.subscribe((actualPrice) => {
-          expect(expectedPrice).toEqual(actualPrice);
+        it(`Then is should call currencyService.getLatestRate() with the GBP`, () => {
+          response$.subscribe(() => {
+            expect(currencyService.getLatestRate).toHaveBeenCalledWith(expectedCurrencyArgument);
+          });
+          getTestScheduler().flush();
         });
-        getTestScheduler().flush();
+
+        it('Then it should return the stock price of that stock in Euro', () => {
+          response$.subscribe((actualPrice) => {
+            expect(expectedPrice).toEqual(actualPrice);
+          });
+          getTestScheduler().flush();
+        });
+
+        afterEach(currencyService.getLatestRate.calls.reset);
       });
     });
   });

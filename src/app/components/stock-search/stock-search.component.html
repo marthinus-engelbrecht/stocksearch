@@ -1,8 +1,10 @@
-<p>
+<div>
+  <label>Selected Stock Item</label>
   <select #select>
     <option *ngFor="let symbol of symbols" [value]="symbol">{{symbol}}</option>
   </select>
+  <br/>
   <button (click)="search()">Search</button>
   <br/>
-  <label>&euro; {{price}}</label>
-</p>
+  <h4>&euro; {{price}}</h4>
+</div>

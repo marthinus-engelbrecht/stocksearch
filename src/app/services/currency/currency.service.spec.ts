@@ -8,7 +8,7 @@ import {Observable} from 'rxjs';
 import {CurrencyEndpoints} from './currency.endpoints';
 import {successFulLatestCurrencyRates} from '../../../testing/mock-data/successful-latest-currency-rates';
 
-describe('CurrencyService', () => {
+describe('Unit Under Test: CurrencyService', () => {
   const http = createSpyObj(HttpClient.name, ['get']);
   beforeEach(() => TestBed.configureTestingModule({
     providers: [

@@ -7,16 +7,13 @@ import {availableStockItems} from '../../services/stocks/available-stock-items.c
   templateUrl: './stock-search.component.html',
   styleUrls: ['./stock-search.component.css']
 })
-export class StockSearchComponent implements OnInit {
+export class StockSearchComponent {
   price = 0.00;
   symbols = availableStockItems;
 
   @ViewChild('select') select;
 
   constructor(private stockService: StocksService) { }
-
-  ngOnInit() {
-  }
 
   search() {
     this.stockService.getPrice(this.select.nativeElement.value).subscribe((price) => {

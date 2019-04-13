@@ -2,11 +2,10 @@
   "name": "stocksearch",
   "version": "0.0.0",
   "scripts": {
-    "test-headless": "ng test --watch=false --browsers=ChromeHeadless",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "ng test",
+    "test": "ng test --code-coverage --watch=false --browsers=ChromeHeadless --source-map=false",
     "lint": "ng lint",
     "e2e": "ng e2e --webdriverUpdate=false",
     "pree2e": "webdriver-manager update --versions.chrome=2.45  --gecko=false"
