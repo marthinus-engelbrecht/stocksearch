@@ -9,7 +9,6 @@ import {StocksEndpoints} from './stocks.endpoints';
 import {Observable} from 'rxjs';
 import {CurrencyService} from '../currency/currency.service';
 import {availableStockItems} from './available-stock-items.constant';
-import {forEach} from "@angular/router/src/utils/collection";
 
 describe('Unit Under Test: StockDataService', () => {
   const http = createSpyObj(HttpClient.name, ['get']);
